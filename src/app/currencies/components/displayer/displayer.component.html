@@ -9,12 +9,26 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
-<mat-grid-list [hidden]="loading" #grid cols="6">
+<mat-grid-list #grid cols="6" [ngStyle]="{'display': loading ? 'none' : '' }">
 
   <mat-grid-tile *ngFor="let currency of currencies" (click)="moveToDetails(currency.id)">
 
     <app-one-currency [currency]="currency"></app-one-currency>
-    
+
   </mat-grid-tile>
 
 </mat-grid-list>
+
+<div *ngIf="currenciesNumber != undefined">
+
+
+  <mat-paginator [ngStyle]="{'display': loading ? 'none' : '' }"
+    [length]="currenciesNumber" 
+    [pageSize]="10" 
+    [showFirstLastButtons]="true" 
+    [pageSizeOptions]="[10, 50, 100]" 
+    (page)="pageChanged()">
+  </mat-paginator>
+
+
+</div>

@@ -9,6 +9,8 @@ import { environment } from '../../../environments/environment';
 
 import { Currency } from '../models/currency.model';
 
+import { CurrenciesPage } from '../models/currencies-page.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,11 +25,11 @@ export class CurrenciesService {
     return headers;
   }
 
-  public findall(): Observable<Currency[]> {
+ public findall(number: any, size: any): Observable<CurrenciesPage> {
 
-    const params = new HttpParams()
-    .append('page[number]', '1')
-    .append('page[size]', '200');
+    const params: HttpParams = new HttpParams()
+      .append('page[number]', number)
+      .append('page[size]', size);
 
     const options = {
       params: params,
@@ -37,14 +39,9 @@ export class CurrenciesService {
     return this.http.get(environment.apiUrl, options)
       .pipe(map((response: any) => {
 
-        const data = response.data;
+        const currenciesPage = new CurrenciesPage(response);
+        return currenciesPage;
 
-        const currencies: Currency[] = [];
-        data.forEach(jsonItem => {
-          currencies.push(new Currency(jsonItem));
-        });
-
-        return currencies;
       }), catchError(this.handleError)
       );
   }

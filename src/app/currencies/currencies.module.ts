@@ -10,7 +10,8 @@ import {
   MatSnackBarModule,
   MatProgressBarModule,
   MatTableModule,
-  MatButtonModule
+  MatButtonModule,
+  MatPaginatorModule
 } from '@angular/material';
 
 import { DisplayerComponent } from './components/displayer/displayer.component';
@@ -30,7 +31,8 @@ import { CurrencyDetailsComponent } from './components/currency-details/currency
     MatSnackBarModule,
     MatProgressBarModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule
   ],
   declarations: [DisplayerComponent, OneCurrencyComponent, CurrencyDetailsComponent]
 })
