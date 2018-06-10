@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
 import { MatGridList, MatSnackBar, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -7,16 +7,26 @@ import { Currency } from '../../models/currency.model';
 
 import { QueryParams } from '../../models/query-params.model';
 
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+
 @Component({
   selector: 'app-displayer',
   templateUrl: './displayer.component.html',
   styleUrls: ['./displayer.component.css']
 })
-export class DisplayerComponent implements OnInit {
+export class DisplayerComponent implements OnInit, AfterContentInit {
 
   currencies: Currency[];
 
   @ViewChild('grid') grid: MatGridList;
+
+  gridByBreakpoint = {
+    xl: 6,
+    lg: 6,
+    md: 4,
+    sm: 2,
+    xs: 2
+  };
 
   loading: boolean;
 
@@ -37,7 +47,8 @@ export class DisplayerComponent implements OnInit {
   constructor(
     private currenciesService: CurrenciesService,
     private snackbar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private observableMedia: ObservableMedia
   ) {
 
   }
@@ -45,6 +56,12 @@ export class DisplayerComponent implements OnInit {
   ngOnInit() {
     this.initQueryParams();
     this.initCurrencies();
+  }
+
+  ngAfterContentInit() {
+    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
+      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    });
   }
 
   private initQueryParams() {

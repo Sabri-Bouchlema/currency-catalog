@@ -16,6 +16,8 @@ import {
   MatInputModule
 } from '@angular/material';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { DisplayerComponent } from './components/displayer/displayer.component';
 import { OneCurrencyComponent } from './components/displayer/one-currency/one-currency.component';
 
@@ -36,7 +38,8 @@ import { CurrencyDetailsComponent } from './components/currency-details/currency
     MatButtonModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    FlexLayoutModule
   ],
   declarations: [DisplayerComponent, OneCurrencyComponent, CurrencyDetailsComponent]
 })
