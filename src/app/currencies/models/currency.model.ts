@@ -2,7 +2,7 @@ import { CurrencyAttributes } from './currency-attributes.model';
 
 export class Currency {
 
-    id: number;
+    id: string;
     attributes: CurrencyAttributes;
 
     constructor(json: any) {

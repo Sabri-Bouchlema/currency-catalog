@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatGridList, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { CurrenciesService } from '../../services/currencies.service';
 import { Currency } from '../../models/currency.model';
@@ -19,7 +20,9 @@ export class DisplayerComponent implements OnInit {
 
   constructor(
     private currenciesService: CurrenciesService,
-    private snackbar: MatSnackBar) {
+    private snackbar: MatSnackBar,
+    private router: Router
+  ) {
 
   }
 
@@ -37,4 +40,7 @@ export class DisplayerComponent implements OnInit {
     });
   }
 
+  moveToDetails(id: string) {
+    this.router.navigate(['/currency/' + id]);
+  }
 }

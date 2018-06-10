@@ -11,7 +11,7 @@
 
 <mat-grid-list [hidden]="loading" #grid cols="6">
 
-  <mat-grid-tile *ngFor="let currency of currencies">
+  <mat-grid-tile *ngFor="let currency of currencies" (click)="moveToDetails(currency.id)">
 
     <app-one-currency [currency]="currency"></app-one-currency>
     

@@ -1,0 +1,62 @@
+<div [hidden]="!loading" class="loader">
+  Loading...
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div *ngIf="currency !== undefined">
+
+  <mat-toolbar color="default">
+    {{currency.id}}
+  </mat-toolbar>
+
+  <mat-divider class="mb mt"></mat-divider>
+
+  <table>
+    <thead>
+      <tr class="mat-header-row ng-star-inserted">
+        <th class="mat-header-cell">Attribute</th>
+        <th class="mat-header-cell">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!---->
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Code</td>
+        <td class="mat-cell">{{currency.attributes.code}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Name</td>
+        <td class="mat-cell">{{currency.attributes.name}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Type</td>
+        <td class="mat-cell">{{currency.attributes.currencyType}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Code iso numeric 3</td>
+        <td class="mat-cell">{{currency.attributes.codeIsoNumeric3}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Code iso alpha 3</td>
+        <td class="mat-cell">{{currency.attributes.codeIsoAlpha3}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Symbol</td>
+        <td class="mat-cell">{{currency.attributes.symbol}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Native symbol</td>
+        <td class="mat-cell">{{currency.attributes.nativeSymbol}}</td>
+      </tr>
+      <tr class="mat-row ng-star-inserted">
+        <td class="mat-cell">Category</td>
+        <td class="mat-cell">{{currency.attributes.category}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<mat-divider class="mb mt"></mat-divider>
+
+<button color="primary" mat-stroked-button (click)="moveToCurrenciesList()">Return</button>

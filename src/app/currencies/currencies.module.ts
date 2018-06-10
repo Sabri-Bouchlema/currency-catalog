@@ -8,13 +8,16 @@ import {
   MatGridListModule,
   MatDividerModule,
   MatSnackBarModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatTableModule,
+  MatButtonModule
 } from '@angular/material';
 
 import { DisplayerComponent } from './components/displayer/displayer.component';
 import { OneCurrencyComponent } from './components/displayer/one-currency/one-currency.component';
 
 import { routes } from './currencies.routes';
+import { CurrencyDetailsComponent } from './components/currency-details/currency-details.component';
 
 @NgModule({
   imports: [
@@ -25,8 +28,10 @@ import { routes } from './currencies.routes';
     MatCardModule,
     MatDividerModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTableModule,
+    MatButtonModule
   ],
-  declarations: [DisplayerComponent, OneCurrencyComponent]
+  declarations: [DisplayerComponent, OneCurrencyComponent, CurrencyDetailsComponent]
 })
 export class CurrenciesModule { }

@@ -30,6 +30,18 @@ export class CurrenciesService {
       );
   }
 
+   public findone(id: string): Observable<Currency> {
+    return this.findall()
+      .pipe(map((_currencies: Currency[]) => {
+
+        const currency = _currencies.find(function(_currency: Currency) {
+          return _currency.id === id;
+        });
+
+        return currency;
+      }), catchError(this.handleError)
+      );
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
