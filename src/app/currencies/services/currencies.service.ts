@@ -1,27 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Currency } from '../models/currency.model';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { Observable, throwError } from 'rxjs';
-import { Component, Input } from '@angular/core';
 
 import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+
+import { Currency } from '../models/currency.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrenciesService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+  private getApiHeaders(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Accept' : 'application/vnd.api+json'
+    });
+    return headers;
   }
 
   public findall(): Observable<Currency[]> {
-    return this.http.get(environment.currenciesJsonFileUrl)
-      .pipe(map((res: any[]) => {
+
+    const params = new HttpParams()
+    .append('page[number]', '1')
+    .append('page[size]', '200');
+
+    const options = {
+      params: params,
+      headers: this.getApiHeaders()
+    };
+
+    return this.http.get(environment.apiUrl, options)
+      .pipe(map((response: any) => {
+
+        const data = response.data;
 
         const currencies: Currency[] = [];
-        res.forEach(jsonItem => {
+        data.forEach(jsonItem => {
           currencies.push(new Currency(jsonItem));
         });
 
@@ -30,18 +49,22 @@ export class CurrenciesService {
       );
   }
 
-   public findone(id: string): Observable<Currency> {
-    return this.findall()
-      .pipe(map((_currencies: Currency[]) => {
+  public findone(id: string): Observable<Currency> {
 
-        const currency = _currencies.find(function(_currency: Currency) {
-          return _currency.id === id;
-        });
+    const options = {
+      headers: this.getApiHeaders()
+    };
+
+    return this.http.get(environment.apiUrl + '/' + id, options)
+      .pipe(map((response: any) => {
+
+        const currency = new Currency(response.data);
 
         return currency;
       }), catchError(this.handleError)
       );
   }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

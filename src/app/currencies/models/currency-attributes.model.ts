@@ -8,7 +8,7 @@ export class CurrencyAttributes {
     symbol: string;
     nativeSymbol: string;
     category: string;
-
+    exponent: number;
     constructor(json: any) {
 
         if (json !== undefined) {
@@ -20,6 +20,7 @@ export class CurrencyAttributes {
             this.symbol = json.symbol;
             this.nativeSymbol = json.native_symbol;
             this.category = json.category;
+            this.exponent = json.exponent;
         }
     }
 }

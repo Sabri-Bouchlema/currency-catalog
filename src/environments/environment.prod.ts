@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  currenciesJsonFileUrl: 'assets/json/currencies.json'
+  apiUrl: 'https://api.openfintech.io/v1/currencies'
 };
