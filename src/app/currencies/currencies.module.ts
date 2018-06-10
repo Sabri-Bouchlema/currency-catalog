@@ -11,7 +11,9 @@ import {
   MatProgressBarModule,
   MatTableModule,
   MatButtonModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatSelectModule,
+  MatInputModule
 } from '@angular/material';
 
 import { DisplayerComponent } from './components/displayer/displayer.component';
@@ -32,7 +34,9 @@ import { CurrencyDetailsComponent } from './components/currency-details/currency
     MatProgressBarModule,
     MatTableModule,
     MatButtonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule,
+    MatInputModule
   ],
   declarations: [DisplayerComponent, OneCurrencyComponent, CurrencyDetailsComponent]
 })

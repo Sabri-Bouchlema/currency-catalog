@@ -9,6 +9,29 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
+<div [ngStyle]="{'display': loading ? 'none' : '' }">
+
+  <mat-form-field>
+    <input matInput placeholder="Search lessons" (keyup)="keyChanged($event.target.value)">
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-select 
+      placeholder="Filter on" 
+      (selectionChange)="attributeChanged($event.value)" 
+      value="search">
+      <mat-option 
+        *ngFor="let option of searchOptions" 
+        [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+<mat-divider></mat-divider>
+
 <mat-grid-list #grid cols="6" [ngStyle]="{'display': loading ? 'none' : '' }">
 
   <mat-grid-tile *ngFor="let currency of currencies" (click)="moveToDetails(currency.id)">
@@ -20,7 +43,6 @@
 </mat-grid-list>
 
 <div *ngIf="currenciesNumber != undefined">
-
 
   <mat-paginator [ngStyle]="{'display': loading ? 'none' : '' }"
     [length]="currenciesNumber" 

@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CurrenciesService } from '../../services/currencies.service';
 import { Currency } from '../../models/currency.model';
 
+import { QueryParams } from '../../models/query-params.model';
+
 @Component({
   selector: 'app-displayer',
   templateUrl: './displayer.component.html',
@@ -21,8 +23,16 @@ export class DisplayerComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   currenciesNumber;
-  pageIndex = 1;
-  pageSize = 10;
+
+  queryParams: QueryParams;
+
+  searchOptions = [
+    { label: 'Any', value: 'search'},
+    { label: 'Id', value: 'id'},
+    { label: 'Code', value: 'code'},
+    { label: 'Name', value: 'name'},
+    { label: 'Type', value: 'currency_type'}
+  ];
 
   constructor(
     private currenciesService: CurrenciesService,
@@ -33,12 +43,20 @@ export class DisplayerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initQueryParams();
     this.initCurrencies();
+  }
+
+  private initQueryParams() {
+    this.queryParams = new QueryParams();
+    this.queryParams.pageIndex = 1;
+    this.queryParams.pageSize = 10;
+    this.queryParams.filterKey = 'any';
   }
 
   private initCurrencies() {
     this.loading = true;
-    this.currenciesService.findall(this.pageIndex, this.pageSize).subscribe(_currenciesPage => {
+    this.currenciesService.findall(this.queryParams).subscribe(_currenciesPage => {
       this.currencies = _currenciesPage.currencies;
       this.currenciesNumber = _currenciesPage.total;
       this.loading = false;
@@ -52,9 +70,20 @@ export class DisplayerComponent implements OnInit {
   }
 
   pageChanged() {
-    this.pageIndex = this.paginator.pageIndex + 1;
-    this.pageSize = this.paginator.pageSize;
+    this.queryParams.pageIndex = this.paginator.pageIndex + 1;
+    this.queryParams.pageSize = this.paginator.pageSize;
     this.initCurrencies();
   }
 
+    keyChanged(value) {
+    this.queryParams.filterValue = value;
+    this.initCurrencies();
+  }
+
+  attributeChanged(key) {
+    this.queryParams.filterKey = key;
+    if (this.queryParams.filterValue !== undefined && this.queryParams.filterValue.length > 0) {
+      this.initCurrencies();
+    }
+  }
 }

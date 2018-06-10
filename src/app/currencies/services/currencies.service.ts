@@ -11,6 +11,8 @@ import { Currency } from '../models/currency.model';
 
 import { CurrenciesPage } from '../models/currencies-page.model';
 
+import { QueryParams } from '../models/query-params.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,11 +27,26 @@ export class CurrenciesService {
     return headers;
   }
 
- public findall(number: any, size: any): Observable<CurrenciesPage> {
+ private buildHttpParams(queryParams: QueryParams): HttpParams {
 
-    const params: HttpParams = new HttpParams()
-      .append('page[number]', number)
-      .append('page[size]', size);
+  if (queryParams.filterValue !== undefined && queryParams.filterValue.length > 0) {
+    const filterValue = queryParams.filterValue;
+    const filterKey = queryParams.filterKey === 'any' ? 'search' : queryParams.filterKey;
+
+    return new HttpParams()
+      .append('page[number]', queryParams.pageIndex.toString())
+      .append('page[size]', queryParams.pageSize.toString())
+      .append(`filter[${filterKey}]`, filterValue);
+  }
+
+  return new HttpParams()
+      .append('page[number]', queryParams.pageIndex.toString())
+      .append('page[size]', queryParams.pageSize.toString());
+ }
+
+ public findall(queryParams: QueryParams): Observable<CurrenciesPage> {
+
+    const params: HttpParams = this.buildHttpParams(queryParams);
 
     const options = {
       params: params,
