@@ -8,6 +8,7 @@ import { Currency } from '../../models/currency.model';
 import { QueryParams } from '../../models/query-params.model';
 
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+import { LastSearchService } from '../../services/last-search.service';
 
 @Component({
   selector: 'app-displayer',
@@ -48,7 +49,8 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
     private currenciesService: CurrenciesService,
     private snackbar: MatSnackBar,
     private router: Router,
-    private observableMedia: ObservableMedia
+    private observableMedia: ObservableMedia,
+    private lastSearchService: LastSearchService
   ) {
 
   }
@@ -65,10 +67,17 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
   }
 
   private initQueryParams() {
-    this.queryParams = new QueryParams();
-    this.queryParams.pageIndex = 1;
-    this.queryParams.pageSize = 10;
-    this.queryParams.filterKey = 'any';
+
+    if(this.lastSearchService.params === undefined)
+    {
+      this.queryParams = new QueryParams();
+      this.queryParams.pageIndex = 1;
+      this.queryParams.pageSize = 10;
+      this.queryParams.filterKey = 'any';
+
+    } else {
+      this.queryParams = this.lastSearchService.params;
+    }
   }
 
   private initCurrencies() {
@@ -83,6 +92,7 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
   }
 
   moveToDetails(id: string) {
+    this.lastSearchService.params = this.queryParams;
     this.router.navigate(['/currency/' + id]);
   }
 

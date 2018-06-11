@@ -7,14 +7,14 @@
 <div>
 
   <mat-form-field>
-    <input matInput placeholder="Search lessons" (keyup)="keyChanged($event.target.value)">
+    <input matInput [value]="queryParams.filterValue? queryParams.filterValue : ''" placeholder="Search lessons" (keyup)="keyChanged($event.target.value)">
   </mat-form-field>
   
   <mat-form-field>
     <mat-select 
       placeholder="Filter on" 
       (selectionChange)="attributeChanged($event.value)" 
-      value="search">
+      [value]="queryParams.filterKey? queryParams.filterKey : 'search'">
       <mat-option 
         *ngFor="let option of searchOptions" 
         [value]="option.value">
