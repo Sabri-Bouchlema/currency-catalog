@@ -57,7 +57,6 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.initQueryParams();
-    this.initCurrencies();
   }
 
   ngAfterContentInit() {
@@ -78,6 +77,7 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
     } else {
       this.queryParams = this.lastSearchService.params;
     }
+    this.initCurrencies();
   }
 
   private initCurrencies() {

@@ -39,6 +39,7 @@
     [pageSize]="10" 
     [showFirstLastButtons]="true" 
     [pageSizeOptions]="[10, 50, 100]" 
+    [pageIndex]="queryParams.pageIndex? queryParams.pageIndex - 1 : '1'"
     (page)="pageChanged()">
   </mat-paginator>
 
