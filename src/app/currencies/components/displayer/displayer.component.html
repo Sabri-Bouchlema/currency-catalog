@@ -4,12 +4,7 @@
 
 <mat-divider class="mb mt"></mat-divider>
 
-<div [hidden]="!loading" class="loader">
-  Loading...
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
-
-<div [ngStyle]="{'display': loading ? 'none' : '' }">
+<div>
 
   <mat-form-field>
     <input matInput placeholder="Search lessons" (keyup)="keyChanged($event.target.value)">
@@ -28,6 +23,11 @@
     </mat-select>
   </mat-form-field>
 
+</div>
+
+<div [hidden]="!loading" class="loader">
+  Loading...
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
 <mat-divider></mat-divider>
