@@ -32,16 +32,6 @@
 
 <mat-divider></mat-divider>
 
-<mat-grid-list #grid cols="6" [ngStyle]="{'display': loading ? 'none' : '' }">
-
-  <mat-grid-tile *ngFor="let currency of currencies" (click)="moveToDetails(currency.id)">
-
-    <app-one-currency [currency]="currency"></app-one-currency>
-
-  </mat-grid-tile>
-
-</mat-grid-list>
-
 <div *ngIf="currenciesNumber != undefined">
 
   <mat-paginator [ngStyle]="{'display': loading ? 'none' : '' }"
@@ -54,3 +44,13 @@
 
 
 </div>
+
+<mat-grid-list #grid cols="6" [ngStyle]="{'display': loading ? 'none' : '' }">
+
+  <mat-grid-tile *ngFor="let currency of currencies" (click)="moveToDetails(currency.id)">
+
+    <app-one-currency [currency]="currency"></app-one-currency>
+
+  </mat-grid-tile>
+
+</mat-grid-list>
