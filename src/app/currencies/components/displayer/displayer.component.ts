@@ -19,7 +19,7 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
 
   currencies: Currency[];
 
-  @ViewChild('grid') grid: MatGridList;
+  @ViewChild('grid', { static: true }) grid: MatGridList;
 
   gridByBreakpoint = {
     xl: 6,
