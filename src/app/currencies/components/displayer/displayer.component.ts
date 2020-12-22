@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
-import { MatGridList, MatSnackBar, MatPaginator } from '@angular/material';
+import { MatGridList } from '@angular/material/grid-list';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 import { CurrenciesService } from '../../services/currencies.service';
