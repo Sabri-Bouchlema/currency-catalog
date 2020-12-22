@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
-import { MatGridList, MatSnackBar, MatPaginator } from '@angular/material';
+import { MatGridList } from '@angular/material/grid-list';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 import { CurrenciesService } from '../../services/currencies.service';
@@ -7,7 +9,7 @@ import { Currency } from '../../models/currency.model';
 
 import { QueryParams } from '../../models/query-params.model';
 
-import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { LastSearchService } from '../../services/last-search.service';
 
 @Component({
@@ -19,7 +21,7 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
 
   currencies: Currency[];
 
-  @ViewChild('grid') grid: MatGridList;
+  @ViewChild('grid', { static: true }) grid: MatGridList;
 
   gridByBreakpoint = {
     xl: 6,
@@ -38,18 +40,18 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
   queryParams: QueryParams;
 
   searchOptions = [
-    { label: 'Any', value: 'search'},
-    { label: 'Id', value: 'id'},
-    { label: 'Code', value: 'code'},
-    { label: 'Name', value: 'name'},
-    { label: 'Type', value: 'currency_type'}
+    { label: 'Any', value: 'search' },
+    { label: 'Id', value: 'id' },
+    { label: 'Code', value: 'code' },
+    { label: 'Name', value: 'name' },
+    { label: 'Type', value: 'currency_type' }
   ];
 
   constructor(
     private currenciesService: CurrenciesService,
     private snackbar: MatSnackBar,
     private router: Router,
-    private observableMedia: ObservableMedia,
+    private observableMedia: MediaObserver,
     private lastSearchService: LastSearchService
   ) {
 
@@ -60,15 +62,14 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
-      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    this.observableMedia.asObservable().subscribe((change: MediaChange[]) => {
+      this.grid.cols = this.gridByBreakpoint[change[0].mqAlias];
     });
   }
 
   private initQueryParams() {
 
-    if(this.lastSearchService.params === undefined)
-    {
+    if (this.lastSearchService.params === undefined) {
       this.queryParams = new QueryParams();
       this.queryParams.pageIndex = 1;
       this.queryParams.pageSize = 10;
@@ -87,7 +88,7 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
       this.currenciesNumber = _currenciesPage.total;
       this.loading = false;
     }, error => {
-      this.snackbar.open(error, 'close', { duration : 2000, });
+      this.snackbar.open(error, 'close', { duration: 2000, });
     });
   }
 
@@ -102,7 +103,7 @@ export class DisplayerComponent implements OnInit, AfterContentInit {
     this.initCurrencies();
   }
 
-    keyChanged(value) {
+  keyChanged(value) {
     this.queryParams.filterValue = value;
     this.initCurrencies();
   }
