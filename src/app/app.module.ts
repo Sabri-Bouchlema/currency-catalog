@@ -16,7 +16,7 @@ import { routes } from './app.routes';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })
   ],
   providers: [],
   bootstrap: [AppComponent]
