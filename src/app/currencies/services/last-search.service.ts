@@ -6,13 +6,13 @@ import { QueryParams } from '../models/query-params.model';
 })
 export class LastSearchService {
 
-  private _params : QueryParams;
-  
-  get params():QueryParams {
+  private _params: QueryParams;
+
+  get params(): QueryParams {
     return this._params;
   }
 
-  set params(theParams:QueryParams) {
-      this._params = theParams;
+  set params(theParams: QueryParams) {
+    this._params = theParams;
   }
 }
